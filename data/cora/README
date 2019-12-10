@@ -13,6 +13,8 @@ The papers were selected in a way such that in the final corpus every paper cite
 
 After stemming and removing stopwords we were left with a vocabulary of size 1433 unique words. All words with document frequency less than 10 were removed.
 
+论文的选择方式是，在最终语料库中，每篇论文引用或被至少一篇其他论文引用。整个语料库中有2708篇论文。
+在词干堵塞和去除词尾后，只剩下1433个独特的单词。文档频率小于10的所有单词都被删除。
 
 THE DIRECTORY CONTAINS TWO FILES:
 
@@ -20,10 +22,23 @@ The .content file contains descriptions of the papers in the following format:
 
 		<paper_id> <word_attributes>+ <class_label>
 
-The first entry in each line contains the unique string ID of the paper followed by binary values indicating whether each word in the vocabulary is present (indicated by 1) or absent (indicated by 0) in the paper. Finally, the last entry in the line contains the class label of the paper.
+The first entry in each line contains the unique string ID of the paper followed by binary values indicating
+ whether each word in the vocabulary is present (indicated by 1) or absent (indicated by 0) in the paper.
+ Finally, the last entry in the line contains the class label of the paper.
+
+ .content文件包含以下格式的论文描述:
+<paper_id> <word_attributes>+ <class_label>
+每行的第一列表示paper的唯一字符串标识，后跟二进制值，指示词汇中的每个单词在文章中是存在(由1表示)还是不存在(由0表示)。
+最后，该行的最后一个列标识paper的类别标签。
+因此数据集的feature应该为2709×14332709维度。第一行为idx，最后一行为label
+
 
 The .cites file contains the citation graph of the corpus. Each line describes a link in the following format:
 
 		<ID of cited paper> <ID of citing paper>
 
-Each line contains two paper IDs. The first entry is the ID of the paper being cited and the second ID stands for the paper which contains the citation. The direction of the link is from right to left. If a line is represented by "paper1 paper2" then the link is "paper2->paper1". 
+Each line contains two paper IDs. The first entry is the ID of the paper being cited and the second ID
+stands for the paper which contains the citation. The direction of the link is from right to left.
+ If a line is represented by "paper1 paper2" then the link is "paper2->paper1".
+
+ .cites文件包含语料库的引用’图’。每行以以下格式描述一个链接:<被引论文编号> <引论文编号>
