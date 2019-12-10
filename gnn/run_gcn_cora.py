@@ -6,8 +6,8 @@ from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.layers import Lambda
 from tensorflow.python.keras.models import  Model
-from gcn import GCN
-from utils import preprocess_adj,plot_embeddings, load_data_v1
+from gnn.gcn import GCN
+from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1
 
 if __name__ == "__main__":
 
