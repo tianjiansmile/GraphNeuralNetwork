@@ -1,0 +1,35 @@
+import pandas as pd
+
+def read_edge_file(file_name):
+    with open('../data/my/'+file_name+'edgelist.txt','r') as rf:
+        with open('../data/my/'+file_name+'_label.txt','w') as wf:
+            for line in rf.readlines():
+                if line and line.strip() is not '':
+                    # line.replace('\n','')
+                    tmp = line.split('\t')
+                    print(tmp)
+                    id = tmp[0]
+                    phone = tmp[1]
+                    t = tmp[2]
+                    wf.write(id+' 0'+'\n')
+                    # if t == 'has_phone\n':
+                    #     wf.write(phone+' 2'+'\n')
+                    # else:
+                    #     wf.write(phone +' 1'+'\n')
+
+
+def data_merge():
+    df = pd.read_csv('../data/emer/45456803word_vec.txt',sep=' ')
+    df_label = pd.read_csv('../data/emer/45456803_label.txt',sep=' ')
+
+    all_df = pd.merge(df, df_label, on='md5_num', how='inner')
+    all_df = all_df.drop_duplicates(subset=['md5_num'],keep='first')
+
+    print(all_df.shape)
+    all_df.to_csv('../data/emer/45456803.content',index=False)
+
+if __name__ == '__main__':
+    # edge_file = '3229132'
+    # read_edge_file(edge_file)
+
+    data_merge()

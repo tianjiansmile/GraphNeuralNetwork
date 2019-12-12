@@ -5,8 +5,8 @@ from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.layers import Lambda
 from tensorflow.python.keras.models import  Model
-from graphsage import sample_neighs, GraphSAGE
-from utils import preprocess_adj,plot_embeddings, load_data_v1
+from gnn.graphsage import sample_neighs, GraphSAGE
+from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1
 
 
 if __name__ == "__main__":
