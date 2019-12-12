@@ -37,7 +37,7 @@ if __name__ == "__main__":
     model.compile(optimizer=Adam(0.01), loss='categorical_crossentropy',
                   weighted_metrics=['categorical_crossentropy', 'acc'])
 
-    NB_EPOCH = 200
+    NB_EPOCH = 400
     PATIENCE = 200  # early stopping patience
 
     val_data = (model_input, y_val, val_mask)
@@ -61,5 +61,6 @@ if __name__ == "__main__":
 
     embedding_model = Model(model.input, outputs=Lambda(lambda x: model.layers[-1].output)(model.input))
     embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
-    y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
+    # y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
+    y = np.genfromtxt("{}{}.content".format('../data/emer/', '45456803'), dtype=np.dtype(str))[:, -1]
     plot_embeddings(embedding_weights, np.arange(A.shape[0]), y)

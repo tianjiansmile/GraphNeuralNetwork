@@ -68,14 +68,14 @@ def load_data_v1(dataset="cora", path="../data/cora/",):
 
 def load_data_emer(dataset="45456803", path="../data/emer/",):
 
-    idx_features_labels = np.genfromtxt("{}{}.content".format(path, dataset), dtype=np.dtype(str))
+    idx_features_labels = np.genfromtxt("{}{}.content2".format(path, dataset), dtype=np.dtype(str))
     features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
     onehot_labels = encode_onehot(idx_features_labels[:, -1])
 
     # build graph
-    idx = np.array(idx_features_labels[:, 0], dtype=np.int32)
+    idx = np.array(idx_features_labels[:, 0], dtype=np.str)
     idx_map = {j: i for i, j in enumerate(idx)}
-    edges_unordered = np.genfromtxt("{}{}.cites".format(path, dataset), dtype=np.int32)
+    edges_unordered = np.genfromtxt("{}{}.edges".format(path, dataset), dtype=np.str)
     edges = np.array(list(map(idx_map.get, edges_unordered.flatten())),
                      dtype=np.int32).reshape(edges_unordered.shape)
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),

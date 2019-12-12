@@ -28,8 +28,28 @@ def data_merge():
     print(all_df.shape)
     all_df.to_csv('../data/emer/45456803.content',index=False)
 
+def map_label(x):
+    if x:
+        return 1
+
+
+def data_merge1():
+    df = pd.read_csv('../data/emer/45456803word_vec.txt',sep=' ')
+    df_label = pd.read_csv('../data/emer/45456803_label.txt', sep=' ')
+    # all_df = df[['md5_num','v1']]
+
+    df['v2'] = df['v1'].map(map_label)
+
+    all_df = df[['md5_num','v2']]
+
+    all_df = pd.merge(all_df, df_label, on='md5_num', how='inner')
+    all_df = all_df.drop_duplicates(subset=['md5_num'], keep='first')
+
+    print(all_df.shape)
+    all_df.to_csv('../data/emer/45456803.content2',index=False)
+
 if __name__ == '__main__':
     # edge_file = '3229132'
     # read_edge_file(edge_file)
 
-    data_merge()
+    data_merge1()
