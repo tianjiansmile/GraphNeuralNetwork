@@ -7,14 +7,17 @@ from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.layers import Lambda
 from tensorflow.python.keras.models import  Model
 from gnn.gcn import GCN
-from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1
+from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1,load_data_emer
 
 if __name__ == "__main__":
 
     FEATURE_LESS = False
 
-    A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_v1(
-        'cora')
+    # A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_v1(
+    #     'cora')
+
+    A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_emer(
+        '45456803')
 
     A = preprocess_adj(A)
 
