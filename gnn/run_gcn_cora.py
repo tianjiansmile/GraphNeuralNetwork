@@ -16,8 +16,11 @@ if __name__ == "__main__":
     # A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_v1(
     #     'cora')
 
+    edge_file = '2334530'
+    path = '../data/user_network/'
+    # path = '../data/emer/'
     A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_emer(
-        '45456803')
+        edge_file,path)
 
     A = preprocess_adj(A)
 
@@ -62,5 +65,5 @@ if __name__ == "__main__":
     embedding_model = Model(model.input, outputs=Lambda(lambda x: model.layers[-1].output)(model.input))
     embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
     # y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
-    y = np.genfromtxt("{}{}.content".format('../data/emer/', '45456803'), dtype=np.dtype(str))[:, -1]
+    y = np.genfromtxt("{}{}.content".format(path, edge_file), dtype=np.dtype(str))[:, -1]
     plot_embeddings(embedding_weights, np.arange(A.shape[0]), y)

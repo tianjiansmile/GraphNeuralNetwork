@@ -33,9 +33,9 @@ def map_label(x):
         return 1
 
 
-def data_merge1():
-    df = pd.read_csv('../data/emer/45456803word_vec.txt',sep=' ')
-    df_label = pd.read_csv('../data/emer/45456803_label.txt', sep=' ')
+def data_merge1(edge_file,data_file):
+    df = pd.read_csv('../data/'+data_file+'/'+edge_file+'word_vec.txt',sep=' ')
+    df_label = pd.read_csv('../data/'+data_file+'/'+edge_file+'_label.txt', sep=' ')
     # all_df = df[['md5_num','v1']]
 
     df['v2'] = df['v1'].map(map_label)
@@ -46,10 +46,11 @@ def data_merge1():
     all_df = all_df.drop_duplicates(subset=['md5_num'], keep='first')
 
     print(all_df.shape)
-    all_df.to_csv('../data/emer/45456803.content2',index=False)
+    all_df.to_csv('../data/'+data_file+'/'+edge_file+'.content',index=False)
 
 if __name__ == '__main__':
-    # edge_file = '3229132'
+    edge_file = '2334530'
+    data_file = 'user_network'
     # read_edge_file(edge_file)
 
-    data_merge1()
+    data_merge1(edge_file,data_file)

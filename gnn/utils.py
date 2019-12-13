@@ -68,7 +68,7 @@ def load_data_v1(dataset="cora", path="../data/cora/",):
 
 def load_data_emer(dataset="45456803", path="../data/emer/",):
 
-    idx_features_labels = np.genfromtxt("{}{}.content2".format(path, dataset), dtype=np.dtype(str))
+    idx_features_labels = np.genfromtxt("{}{}.content".format(path, dataset), dtype=np.dtype(str))
     features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
     onehot_labels = encode_onehot(idx_features_labels[:, -1])
 
