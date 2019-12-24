@@ -70,10 +70,12 @@ class GraphConvolution(Layer):  # ReLU(AXW)
     def call(self, inputs, training=None, **kwargs):
         features, A = inputs
         features = self.dropout(features, training=training)
+        # A*X*W
         output = tf.matmul(tf.sparse_tensor_dense_matmul(
             A, features), self.kernel)
         if self.bias:
             output += self.bias
+        # Relu(A*X*W)
         act = self.activation(output)
 
         act._uses_learning_phase = features._uses_learning_phase
