@@ -66,6 +66,7 @@ class GraphConvolution(Layer):  # ReLU(AXW)
 
         self.built = True
 
+    # 回调函数 具体的图卷积过程
     def call(self, inputs, training=None, **kwargs):
         features, A = inputs
         features = self.dropout(features, training=training)
@@ -95,6 +96,7 @@ class GraphConvolution(Layer):  # ReLU(AXW)
 def GCN(adj_dim,feature_dim,n_hidden, num_class, num_layers=2,activation=tf.nn.relu,dropout_rate=0.5, l2_reg=0, feature_less=True, ):
     Adj = Input(shape=(None,), sparse=True)
     if feature_less:
+        # 定义输入层维度
         X_in = Input(shape=(1,), )
 
         emb = Embedding(adj_dim, feature_dim,
@@ -104,15 +106,24 @@ def GCN(adj_dim,feature_dim,n_hidden, num_class, num_layers=2,activation=tf.nn.r
     else:
         X_in = Input(shape=(feature_dim,), )
 
+
         h = X_in
 
+    # num_layers 隐藏层层数，层数越多，感受域越大，一般设置2--3
     for i in range(num_layers):
         if i == num_layers - 1:
+            # 输出层
             activation = tf.nn.softmax
             n_hidden = num_class
+
+        # 定义图卷积层，拉普拉斯矩阵固定，传入上一层输出特征
+        # n_hidden 该层神经元个数
         h = GraphConvolution(n_hidden, activation=activation, dropout_rate=dropout_rate, l2_reg=l2_reg)([h,Adj])
 
+    # 输出层
     output = h
+
+    # 确定模型框架
     model = Model(inputs=[X_in,Adj], outputs=output)
 
     return model

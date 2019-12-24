@@ -6,13 +6,19 @@ from tensorflow.python.keras.optimizers import Adam
 from tensorflow.python.keras.layers import Lambda
 from tensorflow.python.keras.models import  Model
 from gnn.graphsage import sample_neighs, GraphSAGE
-from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1
+from gnn.utils import preprocess_adj,plot_embeddings, load_data_v1,load_data_emer
 
 
 if __name__ == "__main__":
 
-    A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_v1(
-        'cora')
+    edge_file = '45456803'
+    path = '../data/emer/'
+
+    A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_emer(
+        edge_file, path)
+
+    # A, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data_v1(
+    #     'cora')
 
     features /= features.sum(axis=1, ).reshape(-1, 1)
 
@@ -66,5 +72,6 @@ if __name__ == "__main__":
     gcn_embedding = model.layers[-1]
     embedding_model = Model(model.input, outputs=Lambda(lambda x: gcn_embedding.output)(model.input))
     embedding_weights = embedding_model.predict(model_input, batch_size=A.shape[0])
-    y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
+    # y  = np.genfromtxt("{}{}.content".format('../data/cora/', 'cora'), dtype=np.dtype(str))[:, -1]
+    y = np.genfromtxt("{}{}.content".format(path, edge_file), dtype=np.dtype(str))[:, -1]
     plot_embeddings(embedding_weights, np.arange(A.shape[0]), y)
